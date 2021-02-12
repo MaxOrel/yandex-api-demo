@@ -2,13 +2,18 @@ class TodoListItem {
 
   static _template = document.querySelector('#todolist-item-template').content;
 
-  constructor(text, addItem) {
-    this._text = text;
+  constructor(data, addItem, api) {
+    this._text = data.name;
+    this._id = data.id;
     this._addItem = addItem;
+    this._api = api;
   }
 
   _delClickHandler = () => {
-    this._view.remove();
+    this._api
+      .removeTask(this._id)
+      .then(()=> this._view.remove())
+      .catch((err)=> console.log(err))
   }
 
   _copyClickHandler = () => {
